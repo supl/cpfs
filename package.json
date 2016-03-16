@@ -1,0 +1,10 @@
+{
+    "name": "@supl/cpfs",
+    "description": "Check public financial statements",
+    "license": "MIT",
+    "repository": {},
+    "dependencies": {
+        "cheerio": "*",
+        "request": "~2"
+    }
+}
