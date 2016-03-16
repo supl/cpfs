@@ -30,7 +30,7 @@ request(target, function (error, response, body) {
 
             var whitelist = JSON.parse(fs.readFileSync("whitelist.json"));
             if (whitelist.apt.indexOf(filename) === -1) {
-                pushover(`Asis Pacific Telecom might update a new financial statement: <${filename}>`);
+                pushover(`Asia Pacific Telecom might update a new financial statement: <${filename}>`);
                 whitelist.apt.push(filename);
                 fs.writeFileSync("whitelist.json", JSON.stringify(whitelist));
             }
