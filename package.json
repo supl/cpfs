@@ -5,7 +5,7 @@
     "repository": {},
     "dependencies": {
         "cheerio": "*",
-        "request": "~2",
+        "sync-request": "~3",
         "node-pushover": "*"
     }
 }
