@@ -23,8 +23,8 @@ function Pushover(config) {
     }
 }
 
-var whitelist = new Whitelist("whitelist.json");
-var pushover = new Pushover("pushover.json");
+var whitelist = new Whitelist(__dirname + "/whitelist.json");
+var pushover = new Pushover(__dirname + "/pushover.json");
 
 var apt = require("./apt");
 if (apt.file == "") {
