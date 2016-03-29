@@ -2,11 +2,18 @@
 
 function Whitelist(storage) {
     var fs = require("fs");
+    this._updated = false;
     this._whitelist = JSON.parse(fs.readFileSync(storage));
     this.has = (source, file) => !(this._whitelist[source].indexOf(file) === -1);
     this.add = (source, file) => {
         this._whitelist[source].push(file);
-        fs.writeFileSync(storage, JSON.stringify(this._whitelist));
+        this._updated = true;
+    };
+
+    this.syncStorage = () => {
+        if (this._updated) {
+            fs.writeFileSync(storage, JSON.stringify(this._whitelist));
+        }
     };
 }
 
@@ -41,3 +48,5 @@ if (fetnet.file == "") {
     pushover.send("Note", `Far EasTone Telecom might update a new financial statement: <${fetnet.file}>`);
     whitelist.add("fetnet", fetnet.file);
 }
+
+whitelist.syncStorage();
