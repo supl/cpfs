@@ -4,9 +4,9 @@ function Whitelist(storage) {
     var fs = require("fs");
     this._updated = false;
     this._whitelist = JSON.parse(fs.readFileSync(storage));
-    this.has = (source, file) => !(this._whitelist[source].indexOf(file) === -1);
-    this.add = (source, file) => {
-        this._whitelist[source].push(file);
+    this.has = (report) => !(this._whitelist[report.source].indexOf(report.file) === -1);
+    this.add = (report) => {
+        this._whitelist[report.source].push(report.file);
         this._updated = true;
     };
 
@@ -34,19 +34,15 @@ var whitelist = new Whitelist(__dirname + "/whitelist.json");
 var pushover = new Pushover(__dirname + "/pushover.json");
 
 var apt = require("./apt");
-if (apt.file == "") {
-    pushover.send("Note", `Asia Pacific Telecom parsing failed`);
-} else if (!whitelist.has("apt", apt.file)) {
+if (!whitelist.has(apt)) {
     pushover.send("Note", `Asia Pacific Telecom might update a new financial statement: <${apt.file}>`);
-    whitelist.add("apt", apt.file);
+    whitelist.add(apt);
 }
 
 var fetnet = require("./fetnet");
-if (fetnet.file == "") {
-    pushover.send("Note", `Far EasTone Telecom parsing failed`);
-} else if (!whitelist.has("fetnet", fetnet.file)) {
+if (!whitelist.has(fetnet)) {
     pushover.send("Note", `Far EasTone Telecom might update a new financial statement: <${fetnet.file}>`);
-    whitelist.add("fetnet", fetnet.file);
+    whitelist.add(fetnet);
 }
 
 whitelist.syncStorage();

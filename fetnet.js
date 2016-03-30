@@ -18,4 +18,7 @@ if (response.statusCode == 200) {
     );
 }
 
-module.exports = { file: file };
+module.exports = {
+    source: "fetnet",
+    file: file
+};

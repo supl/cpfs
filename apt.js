@@ -17,4 +17,7 @@ if (response.statusCode == 200) {
     }
 }
 
-module.exports = { file: file };
+module.exports = {
+    source: "apt",
+    file: file
+};
