@@ -45,4 +45,10 @@ if (!whitelist.has(fetnet)) {
     whitelist.add(fetnet);
 }
 
+var twm = require("./twm");
+if (!whitelist.has(twm)) {
+    pushover.send("Note", `Taiwan Mobile might update a new financial statement: <${twm.file}>`);
+    whitelist.add(twm);
+}
+
 whitelist.syncStorage();
