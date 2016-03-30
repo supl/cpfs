@@ -32,23 +32,26 @@ function Pushover(config) {
 
 var whitelist = new Whitelist(__dirname + "/whitelist.json");
 var pushover = new Pushover(__dirname + "/pushover.json");
+var targets = [
+    {
+        report: require("./apt"),
+        message: "Asia Pacific Telecom updated operating report: "
+    },
+    {
+        report: require("./fetnet"),
+        message: "Far EasTone Telecom updated operating report: "
+    },
+    {
+        report: require("./twm"),
+        message: "Taiwan Mobile updated operating report: "
+    },
+];
 
-var apt = require("./apt");
-if (!whitelist.has(apt)) {
-    pushover.send("Note", `Asia Pacific Telecom might update a new financial statement: <${apt.file}>`);
-    whitelist.add(apt);
-}
-
-var fetnet = require("./fetnet");
-if (!whitelist.has(fetnet)) {
-    pushover.send("Note", `Far EasTone Telecom might update a new financial statement: <${fetnet.file}>`);
-    whitelist.add(fetnet);
-}
-
-var twm = require("./twm");
-if (!whitelist.has(twm)) {
-    pushover.send("Note", `Taiwan Mobile might update a new financial statement: <${twm.file}>`);
-    whitelist.add(twm);
+for (var target of targets) {
+    if (!whitelist.has(target.report)) {
+        pushover.send("Note", target.message + `<${target.report.file}>`);
+        whitelist.add(target.report);
+    }
 }
 
 whitelist.syncStorage();
