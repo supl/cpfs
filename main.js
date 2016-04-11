@@ -45,6 +45,10 @@ var targets = [
         report: require("./twm"),
         message: "Taiwan Mobile updated operating report: "
     },
+    {
+        report: require("./cht"),
+        message: "ChungHwa Telecom updated operating report: "
+    },
 ];
 
 for (var target of targets) {
